@@ -32,9 +32,9 @@ int main(void){
 	if (process_create (p1,20) < 0) {
 	 	return -1;
 	}
-	//if (process_create (p1,20) < 0) {
-	// 	return -1;
-	//}
+	if (process_create (p1,20) < 0) {
+	 	return -1;
+	}
 	
 	process_start();
   LEDGreen_On();

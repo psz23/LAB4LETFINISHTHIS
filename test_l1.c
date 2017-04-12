@@ -12,6 +12,8 @@ void p1 (){
 	for (i=0; i < 10; i++) {
 		delay();
 		LEDBlue_Toggle();
+		delay();
+		LEDBlue_Toggle();
 	}
 }
 
@@ -21,11 +23,12 @@ void p (){
 	for (i=0; i < 5; i++) {
 		delay();
 		LEDRed_Toggle();
+		delay();
+		LEDRed_Toggle();
 	}
 }
 
 void p2 (){
-	delay();
 	l_lock(&a);
 	p();
 	l_unlock(&a);

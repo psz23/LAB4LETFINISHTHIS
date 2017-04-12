@@ -34,11 +34,8 @@ void p2 (){
 int main(void){
 	LED_Initialize();
 
-	l_init (&a);
+	l_init(&a);
 	l_init(&b);
-	
-	LEDGreen_Toggle();
-	LEDGreen_Toggle();
 	
 	if (process_create (p1,20) < 0) {
 	 	return -1;

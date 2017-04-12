@@ -430,34 +430,9 @@
               <FilePath>.\process_soln.c</FilePath>
             </File>
             <File>
-              <FileName>lab4_t0.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\lab4_t0.c</FilePath>
-            </File>
-            <File>
-              <FileName>lab4_t1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\lab4_t1.c</FilePath>
-            </File>
-            <File>
-              <FileName>test_l1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test_l1.c</FilePath>
-            </File>
-            <File>
               <FileName>test_l2.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\test_l2.c</FilePath>
-            </File>
-            <File>
-              <FileName>lab4_x0.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\lab4_x0.c</FilePath>
-            </File>
-            <File>
-              <FileName>lab4_x1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\lab4_x1.c</FilePath>
             </File>
           </Files>
         </Group>
