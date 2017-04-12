@@ -1,4 +1,8 @@
 #include "lock.h"
+#include "cond.h"
+#include "shared_structs.h"
+#include <stdlib.h>
+#include <fsl_device_registers.h>
 
 /**
  * Initialises the conditional variable structure
@@ -7,7 +11,7 @@
  * @param c pointer to conditional variable to be initialised
  */
 void c_init(lock_t* l, cond_t* c){
-	c->
+	c->ready = 0;
 }
 
 
@@ -19,8 +23,8 @@ void c_init(lock_t* l, cond_t* c){
  * @param c pointer to conditional variable
  */
 void c_wait(lock_t* l, cond_t* c){
-	while(!&c);
-	
+	while(!c->ready);
+	l_lock(l);
 }
 
 
@@ -51,7 +55,9 @@ int c_waiting(lock_t* l, cond_t* c){
  * @param c pointer to conditional variable
  */
 void c_signal(lock_t* l, cond_t* c){
+	c->ready = 1;
 	
+	l_unlock(l);
 }
 
 #endif /* __LOCK_H_INCLUDED */
