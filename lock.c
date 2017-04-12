@@ -10,12 +10,8 @@
  * @param l pointer to lock to be initialised
  */
 void l_init(lock_t* l) {
-<<<<<<< HEAD
-	l->process = NULL;
-=======
 	l->blocked_queue = NULL;
 	l->blocked_tail = NULL;
->>>>>>> e87b20ddff584d9b101bf3c6e3057c38ebcc50ae
 	l->locked = 0;
 }
 
@@ -28,17 +24,18 @@ void l_lock(lock_t* l) {
 	PIT->CHANNEL[0].TCTRL = 0x1;
 	if (l->locked) {
 		current_process->waiting = 1;
-		current_process->lock = l;
+		if (!l->blocked_queue) {
+			l->blocked_queue = current_process;
+		}
+		if (l->blocked_tail) {
+			l->blocked_tail->next_block = current_process;
+		}
+		l->blocked_tail = current_process;
+		current_process->next_block = NULL;
 		process_blocked();
 	}
 	else {
 		current_process->waiting = 0;
-<<<<<<< HEAD
-		current_process->lock = l;
-		l->process = current_process;
-=======
-		current_process->lock = NULL;
->>>>>>> e87b20ddff584d9b101bf3c6e3057c38ebcc50ae
 		l->locked = 1;
 	}
 	PIT->CHANNEL[0].TCTRL = 0x3;
@@ -55,12 +52,29 @@ void l_unlock(lock_t* l) {
 	if (!l->blocked_queue) {
 		l->locked = 0;
 	}
-<<<<<<< HEAD
-	current_process->lock = NULL;
-	l->process = current_process->next_block;
-=======
-	process_t *tmp = pop_front_blocked(l);
-	push_tail_process(tmp);
->>>>>>> e87b20ddff584d9b101bf3c6e3057c38ebcc50ae
+	else {
+		//pop from block queue
+		process_t *proc = l->blocked_queue;
+		l->blocked_queue = proc->next_block;
+		if (l->blocked_tail == proc) {
+			l->blocked_tail = NULL;
+		}
+		proc->next_block = NULL;
+		proc->waiting = 0;
+		
+		//push to process queue
+		if (!process_queue) {
+			process_queue = proc;
+			proc->next = NULL;
+		}
+		else {
+			process_t *tmp = process_queue;
+			while (tmp->next) {
+				tmp = tmp->next;
+			}
+			tmp->next = proc;
+			proc->next = NULL;
+		}
+	}
 	PIT->CHANNEL[0].TCTRL = 0x3;
 }

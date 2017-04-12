@@ -405,6 +405,11 @@
               <FilePath>.\lock.h</FilePath>
             </File>
             <File>
+              <FileName>shared_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\shared_structs.h</FilePath>
+            </File>
+            <File>
               <FileName>utils.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\utils.c</FilePath>
@@ -430,9 +435,19 @@
               <FilePath>.\lab4_t0.c</FilePath>
             </File>
             <File>
-              <FileName>cond.c</FileName>
+              <FileName>lab4_t1.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\cond.c</FilePath>
+              <FilePath>.\lab4_t1.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_l1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\test_l1.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_l2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\test_l2.c</FilePath>
             </File>
           </Files>
         </Group>

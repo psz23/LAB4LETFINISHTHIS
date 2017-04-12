@@ -9,7 +9,6 @@ unsigned int nr= 0;
 
 void p1 (){
 	int i;
-	int j;
 	for (i=0; i < 10; i++) {
 		delay();
 		LEDBlue_Toggle();
@@ -44,7 +43,6 @@ void reader (void) {
 
 void writer (void) {
 	/* enter */
-  int j;
 	l_lock(&w);
 	/*start writing*/
 
