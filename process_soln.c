@@ -8,15 +8,11 @@
 
 process_t * current_process = NULL; 
 process_t * process_queue = NULL;
-process_t * process_tail = NULL;
 
 static process_t * pop_front_process() {
 	if (!process_queue) return NULL;
 	process_t *proc = process_queue;
 	process_queue = proc->next;
-	if (process_tail == proc) {
-		process_tail = NULL;
-	}
 	proc->next = NULL;
 	return proc;
 }
@@ -24,11 +20,16 @@ static process_t * pop_front_process() {
 static void push_tail_process(process_t *proc) {
 	if (!process_queue) {
 		process_queue = proc;
+		proc->next = NULL;
 	}
-	if (process_tail) {
-		process_tail->next = proc;
+	else {
+		process_t *tmp = process_queue;
+		while (tmp->next) {
+			tmp = tmp->next;
+		}
+		tmp->next = proc;
+		proc->next = NULL;
 	}
-	process_tail = proc;
 	proc->next = NULL;
 }
 
@@ -75,7 +76,7 @@ unsigned int * process_select (unsigned int * cursp) {
 void process_start (void) {
 	SIM->SCGC6 |= SIM_SCGC6_PIT_MASK;
 	PIT->MCR = 0;
-	PIT->CHANNEL[0].LDVAL = DEFAULT_SYSTEM_CLOCK * 10;
+	PIT->CHANNEL[0].LDVAL = DEFAULT_SYSTEM_CLOCK / 100;
 	//PIT->CHANNEL[0].LDVAL = 0xFFFF;
 	NVIC_EnableIRQ(PIT0_IRQn);
 	// Don't enable the timer yet. The scheduler will do so itself
@@ -98,6 +99,7 @@ int process_create (void (*f)(void), int n) {
 	
 	proc->sp = proc->orig_sp = sp;
 	proc->n = n;
+	proc->waiting = 0;
 	
 	push_tail_process(proc);
 	return 0;
