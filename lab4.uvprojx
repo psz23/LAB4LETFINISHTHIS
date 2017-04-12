@@ -449,6 +449,16 @@
               <FileType>1</FileType>
               <FilePath>.\test_l2.c</FilePath>
             </File>
+            <File>
+              <FileName>lab4_x0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\lab4_x0.c</FilePath>
+            </File>
+            <File>
+              <FileName>lab4_x1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\lab4_x1.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
