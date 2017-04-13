@@ -21,12 +21,16 @@ void l_init(lock_t* l) {
  * @param l pointer to lock to be grabbed
  */
 void l_lock(lock_t* l) {
+	// disable interrupts; atomicity
 	PIT->CHANNEL[0].TCTRL = 0x1;
+	// if locked, add to blocked queue
 	if (l->locked) {
 		current_process->waiting = 1;
+		// add to beginning if empty
 		if (!l->blocked_queue) {
 			l->blocked_queue = current_process;
 		}
+		// add as tail if not empty
 		if (l->blocked_tail) {
 			l->blocked_tail->next_block = current_process;
 		}
@@ -34,10 +38,12 @@ void l_lock(lock_t* l) {
 		current_process->next_block = NULL;
 		process_blocked();
 	}
+	// get the lock, update that the process is no longer waiting
 	else {
 		current_process->waiting = 0;
 		l->locked = 1;
 	}
+	// reenable interrupts
 	PIT->CHANNEL[0].TCTRL = 0x3;
 }
 
@@ -48,6 +54,7 @@ void l_lock(lock_t* l) {
  * @param l pointer to lock to be unlocked
  */
 void l_unlock(lock_t* l) {
+	// disable interrupts; atomicity
 	PIT->CHANNEL[0].TCTRL = 0x1;
 	if (!l->blocked_queue) {
 		l->locked = 0;
@@ -67,6 +74,7 @@ void l_unlock(lock_t* l) {
 			process_queue = proc;
 			proc->next = NULL;
 		}
+		// find tail
 		else {
 			process_t *tmp = process_queue;
 			while (tmp->next) {
@@ -76,5 +84,6 @@ void l_unlock(lock_t* l) {
 			proc->next = NULL;
 		}
 	}
+	// reenable interrupts
 	PIT->CHANNEL[0].TCTRL = 0x3;
 }
